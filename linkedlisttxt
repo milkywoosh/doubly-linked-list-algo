@@ -3,16 +3,16 @@ package main
 import "fmt"
 
 type LinkedList struct {
-	parent int
-	child  *LinkedList
+	current int
+	next  *LinkedList
 }
 
 func (ll *LinkedList) Add(val int) {
-	if ll.child == nil {
-		ll.child = &LinkedList{parent: val}
+	if ll.next == nil {
+		ll.next = &LinkedList{current: val}
 		return
 	} else {
-		ll.child.Add(val)
+		ll.next.Add(val)
 		return
 	}
 }
@@ -20,8 +20,8 @@ func (ll *LinkedList) Add(val int) {
 func (ll *LinkedList) Print() {
 	current := ll
 	for current != nil {
-		fmt.Printf("%d\n", current.parent)
-		current = current.child
+		fmt.Printf("%d\n", current.current)
+		current = current.next
 	}
 }
 
@@ -29,10 +29,12 @@ func (ll *LinkedList) Prepend(val int) *LinkedList {
 	// insert value at before the first node
 
 	newNode := &LinkedList{
-		parent: val,
-		child:  ll,
+		current: val,
+		next:  ll,
 	}
 
 	return newNode
 
 }
+
+
