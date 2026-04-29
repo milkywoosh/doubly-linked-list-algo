@@ -1,36 +1,72 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+
+	dllhash "github.com/structgo/dll_hash"
+)
 
 // hint of size = 100, avoid rehashing and avoid more memory allocation and CPU cost
-var hm HashMap = make(HashMap, 3)
+
+// const (
+// 	SmallVehicle  VehicleSize = iota
+// 	MediumVehicle VehicleSize = iota
+// 	BigVehicle    VehicleSize = iota
+// )
 
 func main() {
 
-	// fmt.Printf("test %s", "Last Recently Used")
-
-	// hm[1] = 1000
-	// hm[2] = 2000
-	// hm[3] = 4000
-	// hm[4] = 5000
-	// hm[5] = 6000
-
-	// fmt.Printf("hm %v", hm)
-	// fmt.Printf("check cap: %v", len(hm))
-
 	defer func() {
 		if err := recover(); err != nil {
-			panic(err)
+			log.Printf("err recover: %v", err)
+			// return
 		}
 	}()
 
 	initNode := NewDoublyLinkedList()
 
-	fmt.Printf("head: %v\n", initNode.head)
-	fmt.Printf("head prev: %v\n", initNode.head.prev)
-	fmt.Printf("head next: %v\n", initNode.head.next)
+	initNode.AddToHead(3)
+	initNode.AddToHead(100)
+	initNode.AddToTail(10)
+	initNode.AddToTail(4)
+	initNode.AddToTail(3)
+	initNode.AddToTail(8)
+	initNode.AddToHead(89)
 
-	fmt.Printf("tail: %v\n", initNode.tail)
-	fmt.Printf("tail prev: %v\n", initNode.tail.prev)
-	fmt.Printf("tail next: %v\n", initNode.tail.next)
+	initNode.TraverseToTail()
+	initNode.TraverseToHead()
+
+	initHashDll := dllhash.NewDoublyLinkedList()
+
+	initHashDll.AddToTail(76)
+	initHashDll.AddToHead(10)
+	initHashDll.AddToHead(32)
+	initHashDll.AddToTail(94)
+
+	_, err := initHashDll.InfoCurrNode(76)
+	if err != nil {
+		fmt.Printf("err: %v", err)
+	}
+
+	// fmt.Printf("curr Node: %v\n", *curr)
+	// fmt.Printf("curr val: %v\n", curr.Val)
+	// fmt.Printf("curr prev: %v\n", curr.Prev)
+	// fmt.Printf("curr prev.Val: %v\n", curr.Prev.Val)
+	// fmt.Printf("curr next: %v\n", curr.Next)
+	// fmt.Printf("curr next.val: %v\n\n", curr.Next.Val)
+
+	err = initHashDll.AddBefore(94, 66)
+	if err != nil {
+		fmt.Printf("err AddBefore: %v", err)
+		return
+	}
+	err = initHashDll.AddBefore(10, 44)
+	if err != nil {
+		fmt.Printf("err AddBefore: %v", err)
+		return
+	}
+
+	// initHashDll.TraverseToTail() // 32, 10, 76, 66, 94
+
 }
