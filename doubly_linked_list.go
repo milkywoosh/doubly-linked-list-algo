@@ -25,33 +25,51 @@ type DoublyLinkedList struct {
 }
 
 func NewDoublyLinkedList() *DoublyLinkedList {
-	headNode := &DoublyLinkedListNode{-1, nil, nil}
-	tailNode := &DoublyLinkedListNode{10000, nil, nil}
-
-	headNode.next = tailNode
-	tailNode.prev = headNode
+	// headNode := &DoublyLinkedListNode{val: -1, prev: nil, next: nil}
+	// tailNode := &DoublyLinkedListNode{val: -1, prev: nil, next: nil}
 
 	return &DoublyLinkedList{
-		head: headNode,
-		tail: tailNode,
+		head: nil,
+		tail: nil,
 	}
 }
 
-func (d *DoublyLinkedList) AddTail(val int) {
-
+func (d *DoublyLinkedList) AddToTail(val int) {
 	newNode := newNode(val)
 	if d.tail == nil {
+		// note: tail and head, pointing to the same memory address newNode *DoublyLinkedListNode
+		// so initially, or at the first addition, newNode is actually d.tail and d.head at the same time
 		d.tail = newNode
 		d.head = newNode
-		return
+	} else {
+
+		newNode.prev = d.tail
+		// d.tail saat ini masih memory address node awal
+		d.tail.next = newNode
+		d.tail = newNode
+	}
+}
+
+func (d *DoublyLinkedList) AddToHead(val int) {
+	newNode := newNode(val)
+
+	if d.head == nil {
+		// note: tail and head, pointing to the same memory address newNode *DoublyLinkedListNode
+		// so initially, or at the first addition, newNode is actually d.tail and d.head at the same time
+		d.tail = newNode
+		d.head = newNode
+
+	} else {
+
+		// note: tail and head, pointing to the same memory address newNode *DoublyLinkedListNode
+		newNode.next = d.head
+		fmt.Println(newNode.next == d.head)
+		d.head.prev = newNode
+		d.head = newNode
+		fmt.Println(newNode.next == d.head)
+
 	}
 
-	// move tail to before new node
-	newNode.prev = d.tail
-	newNode.next = nil
-
-	d.tail.next = newNode
-	d.tail = newNode
 }
 
 func (d *DoublyLinkedList) TraverseToHead() {
@@ -60,17 +78,21 @@ func (d *DoublyLinkedList) TraverseToHead() {
 	if d != nil {
 		for d.tail != nil {
 			fmt.Printf("tail ...: %v\n", d.tail.val)
-
 			d.tail = d.tail.prev
 		}
 	}
-	if d.tail == nil {
-		fmt.Printf("data tail is: %v\n", d)
-		return
-	}
 
-	for d.tail.next != nil {
-		fmt.Printf("next to tail next: %v\n", d.tail)
-		d.tail = d.tail.next
+}
+
+func (d *DoublyLinkedList) TraverseToTail() {
+	// note: dont forget to use TEMP variable to avoid changing to the REAL memory address
+	tempNode := d.head
+	if d != nil {
+		for tempNode != nil {
+			fmt.Printf("from head: %v\n", tempNode.val)
+
+			tempNode = tempNode.next
+
+		}
 	}
 }
