@@ -73,8 +73,6 @@ func (d *DoublyLinkedList) AddToHead(val int) {
 }
 
 func (d *DoublyLinkedList) TraverseToHead() {
-	fmt.Printf("only d: %v\n", d)
-
 	if d != nil {
 		for d.tail != nil {
 			fmt.Printf("tail ...: %v\n", d.tail.val)

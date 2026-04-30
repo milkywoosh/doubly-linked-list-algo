@@ -56,14 +56,14 @@ func main() {
 	// fmt.Printf("curr next: %v\n", curr.Next)
 	// fmt.Printf("curr next.val: %v\n\n", curr.Next.Val)
 
-	err = initHashDll.AddBefore(94, 66)
+	err = initHashDll.AddPrev(94, 66)
 	if err != nil {
-		fmt.Printf("err AddBefore: %v", err)
+		fmt.Printf("err AddPrev: %v", err)
 		return
 	}
-	err = initHashDll.AddBefore(10, 44)
+	err = initHashDll.AddPrev(10, 44)
 	if err != nil {
-		fmt.Printf("err AddBefore: %v", err)
+		fmt.Printf("err AddPrev: %v", err)
 		return
 	}
 
