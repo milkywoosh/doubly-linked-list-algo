@@ -2,7 +2,6 @@ package dllhash
 
 import (
 	"fmt"
-	"log"
 	"sync"
 )
 
@@ -105,8 +104,9 @@ func (d *DoublyLinkedList) AddToHead(val int) {
 func (d *DoublyLinkedList) TraverseToHead() {
 	tempNode := d.tail
 	if d != nil {
+		fmt.Printf("from tail to head \n")
 		for tempNode != nil {
-			log.Printf("from tail to head: %v\n", tempNode.Val)
+			fmt.Printf("%v - ", tempNode.Val)
 			tempNode = tempNode.Prev
 		}
 	}
@@ -117,8 +117,9 @@ func (d *DoublyLinkedList) TraverseToTail() {
 	// note: dont forget to use TEMP variable to avoid changing to the REAL memory address
 	tempNode := d.head
 	if d != nil {
+		fmt.Printf("from head to tail \n")
 		for tempNode != nil {
-			log.Printf("from head to tail: %v\n", tempNode.Val)
+			fmt.Printf("%v - ", tempNode.Val)
 
 			tempNode = tempNode.Next
 

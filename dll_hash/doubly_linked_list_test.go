@@ -1,7 +1,7 @@
 package dllhash
 
 import (
-	"log"
+	"fmt"
 	"testing"
 )
 
@@ -47,7 +47,6 @@ func TestDoublyLinkedListHash(t *testing.T) {
 
 	}
 
-
 	err := dll.AddPrev(2, 109)
 	if err != nil {
 		t.Errorf("%v", err)
@@ -58,8 +57,34 @@ func TestDoublyLinkedListHash(t *testing.T) {
 		t.Errorf("%v", err)
 	}
 
-	dll.TraverseToHead()
-	// dll.TraverseToTail()
+	dll.TraverseToTail()
+	// dll.TraverseToHead()
 
-	log.Printf("pass \n")
+	currNode, err := dll.InfoCurrNode(109) // assume that prev is 2 and next is 10
+	if err != nil {
+		t.Fatalf("err check info curr node: %v", err)
+	}
+
+	if currNode.Next.Val != 2 {
+		t.Errorf("next val must be %d, got %d\n", 2, currNode.Next.Val)
+	}
+
+	if currNode.Prev.Val != 10 {
+		t.Errorf("prev val must be %d, got %d\n", 10, currNode.Prev.Val)
+	}
+
+	headNode, err := dll.InfoCurrNode(111) // assume that prev is 2 and next is 10
+	if err != nil {
+		t.Fatalf("err check info head curr node: %v", err)
+	}
+
+	if headNode.Next.Val != 10 {
+		t.Errorf("next HEAD must be %d, got %d\n", 10, headNode.Next.Val)
+	}
+
+	if headNode.Prev != nil {
+		t.Errorf("prev HEAD must be nil, got %v\n", headNode.Prev)
+	}
+
+	fmt.Printf("\n pass \n")
 }
