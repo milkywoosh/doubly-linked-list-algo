@@ -2,10 +2,14 @@ package dllhash
 
 import (
 	"fmt"
+	"log"
 	"sync"
 )
 
 type HashMap map[int]*DoublyLinkedListNode
+
+//
+// << HEAD (prev) =================== (next) TAIL >>
 
 // note that DoublyLinkedListNode doesnt know anything
 type DoublyLinkedListNode struct {
@@ -88,10 +92,10 @@ func (d *DoublyLinkedList) AddToHead(val int) {
 
 		// note: tail and head, pointing to the same memory address newNode *DoublyLinkedListNode
 		newNode.Next = d.head
-		// fmt.Println(newNode.next == d.head)
+
 		d.head.Prev = newNode
 		d.head = newNode
-		// fmt.Println(newNode.next == d.head)
+
 		d.SetHash(val, newNode)
 
 	}
@@ -99,12 +103,11 @@ func (d *DoublyLinkedList) AddToHead(val int) {
 }
 
 func (d *DoublyLinkedList) TraverseToHead() {
-	fmt.Printf("only d: %v\n", d)
-
+	tempNode := d.tail
 	if d != nil {
-		for d.tail != nil {
-			fmt.Printf("tail ...: %v\n", d.tail.Val)
-			d.tail = d.tail.Prev
+		for tempNode != nil {
+			log.Printf("from tail to head: %v\n", tempNode.Val)
+			tempNode = tempNode.Prev
 		}
 	}
 
@@ -115,7 +118,7 @@ func (d *DoublyLinkedList) TraverseToTail() {
 	tempNode := d.head
 	if d != nil {
 		for tempNode != nil {
-			fmt.Printf("from head: %v\n", tempNode.Val)
+			log.Printf("from head to tail: %v\n", tempNode.Val)
 
 			tempNode = tempNode.Next
 
@@ -124,37 +127,33 @@ func (d *DoublyLinkedList) TraverseToTail() {
 }
 
 // problem if add to previous of Head
-func (d *DoublyLinkedList) AddBefore(currVal, val int) error {
+func (d *DoublyLinkedList) AddPrev(currVal, val int) error {
 	// var memAddr *DoublyLinkedListNode
 	memAddr, err := d.InfoCurrNode(currVal)
 	if err != nil {
 		return fmt.Errorf("val %d tidak ditemukan", currVal)
 	}
 
-	node := newNode(val) // memory address
-	d.SetHash(val, node)
-
-	fmt.Println("curr val prev: ", memAddr.Prev)
-
-	node.Next = memAddr
-	fmt.Println("node.Next: ", node.Next)
-	fmt.Println("node.Val: ", node.Val)
-	node.Prev = memAddr.Prev
-	fmt.Println("node.Prev: ", node.Prev)
 	if memAddr.Prev != nil {
+		node := newNode(val) // memory address
+
 		memAddr.Prev.Next = node
+		node.Next = memAddr
+		node.Prev = memAddr.Prev
+		memAddr.Prev = node
+
+		d.SetHash(val, node)
+		return nil
 	} else {
+		// if nil use existed API
+		d.AddToHead(val)
+		return nil
 
 	}
 
-	return nil
 }
 
 func (d *DoublyLinkedList) Find(val int) bool {
 	_, ok := d.hashd[val]
-	if !ok {
-		return false
-	} else {
-		return ok
-	}
+	return ok
 }
