@@ -2,6 +2,7 @@ package dllhash
 
 import (
 	"fmt"
+	"log"
 	"testing"
 )
 
@@ -87,4 +88,35 @@ func TestDoublyLinkedListHash(t *testing.T) {
 	}
 
 	fmt.Printf("\n pass \n")
+}
+
+func TestEqualHeadAndTail(t *testing.T) {
+
+	dll := NewDoublyLinkedList()
+
+	firstVal := 10
+	dll.AddToHead(firstVal)
+
+	isFound := dll.Find(firstVal)
+	if !isFound {
+		t.Errorf("expected isFound to be true, got => %v", isFound)
+	}
+
+	headNode := dll.GetHead()
+	tailNode := dll.GetTail()
+
+	if headNode != tailNode {
+		t.Errorf("headNode and headTail must be equal for its value and memory address")
+	}
+
+	// add new node to head
+	dll.AddToHead(38)
+
+	// now headNode and tailNode must not be equal
+	isEqual := dll.GetHead() == dll.GetTail()
+	if isEqual {
+		t.Errorf("expectation is ==> now head and tail must be not equal, got %v", isEqual)
+	}
+
+	log.Printf("pass test\n")
 }

@@ -158,3 +158,25 @@ func (d *DoublyLinkedList) Find(val int) bool {
 	_, ok := d.hashd[val]
 	return ok
 }
+
+func (d *DoublyLinkedList) GetHead() *DoublyLinkedListNode {
+	if d != nil {
+		if d.head != nil {
+			return d.head
+		} else {
+			return nil
+		}
+	}
+	return nil
+}
+
+func (d *DoublyLinkedList) GetTail() *DoublyLinkedListNode {
+	if d != nil {
+		if d.tail != nil {
+			return d.tail
+		} else {
+			return nil
+		}
+	}
+	return nil
+}
