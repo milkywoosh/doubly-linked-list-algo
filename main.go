@@ -34,8 +34,8 @@ func main() {
 	initNode.AddToTail(8)
 	initNode.AddToHead(89)
 
-	initNode.TraverseToTail()
-	initNode.TraverseToHead()
+	initNode.TraverseHeadToTail()
+	initNode.TraverseTailToHead()
 
 	initHashDll := dllhash.NewDoublyLinkedList()
 
@@ -67,6 +67,6 @@ func main() {
 		return
 	}
 
-	// initHashDll.TraverseToTail() // 32, 10, 76, 66, 94
+	// initHashDll.TraverseHeadToTail() // 32, 10, 76, 66, 94
 
 }

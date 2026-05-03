@@ -57,8 +57,8 @@ func TestDoublyLinkedListHash(t *testing.T) {
 		t.Errorf("%v", err)
 	}
 
-	dll.TraverseToTail()
-	// dll.TraverseToHead()
+	dll.TraverseHeadToTail()
+	// dll.TraverseTailToHead()
 
 	currNode, err := dll.InfoCurrNode(109) // assume that prev is 2 and next is 10
 	if err != nil {

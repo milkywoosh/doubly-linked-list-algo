@@ -101,7 +101,7 @@ func (d *DoublyLinkedList) AddToHead(val int) {
 
 }
 
-func (d *DoublyLinkedList) TraverseToHead() {
+func (d *DoublyLinkedList) TraverseTailToHead() {
 	tempNode := d.tail
 	if d != nil {
 		fmt.Printf("from tail to head \n")
@@ -113,7 +113,7 @@ func (d *DoublyLinkedList) TraverseToHead() {
 
 }
 
-func (d *DoublyLinkedList) TraverseToTail() {
+func (d *DoublyLinkedList) TraverseHeadToTail() {
 	// note: dont forget to use TEMP variable to avoid changing to the REAL memory address
 	tempNode := d.head
 	if d != nil {
